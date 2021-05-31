@@ -49,7 +49,7 @@ class API
         $request = $this->client->newRequest(
             'POST',
             $this->client->buildUriWithQuery('/api/mtk/SmBulkSend', ['Encoding_PostIn' => 'UTF8']),
-            'text/plain',
+            'application/x-www-form-urlencoded',
             $body
         );
 
