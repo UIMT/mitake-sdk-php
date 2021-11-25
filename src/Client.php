@@ -2,12 +2,12 @@
 
 namespace Mitake;
 
-use function GuzzleHttp\Psr7\build_query;
-use function GuzzleHttp\Psr7\uri_for;
 use Mitake\Exception\BadResponseException;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use GuzzleHttp\Psr7\Uri;
+use GuzzleHttp\Psr7\Utils;
+use GuzzleHttp\Psr7\Query;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
@@ -206,7 +206,7 @@ class Client
      */
     public function buildUriWithQuery($uri, array $params = [])
     {
-        $uri = uri_for($uri);
+        $uri = Utils::uriFor($uri);
 
         if (!Uri::isAbsolute($uri)) {
             $uri = $uri->withScheme($this->baseURL->getScheme())
@@ -220,7 +220,7 @@ class Client
             'password' => $this->password,
         ];
 
-        return $uri->withQuery(build_query(array_merge($default, $params)));
+        return $uri->withQuery(Query::build(array_merge($default, $params)));
     }
 
     /**
